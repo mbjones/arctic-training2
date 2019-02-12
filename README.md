@@ -1,8 +1,8 @@
-# Arctic Training Handss on materials
+# Arctic Training Hands on materials
 
 Hands on materials for the Arctic Data Training workshop
 
-* Datalkdjlask
+* Data
 * Lessons
 * Notes
 
