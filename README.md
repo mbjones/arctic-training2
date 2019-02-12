@@ -2,7 +2,7 @@
 
 Hands on materials for the Arctic Data Training workshop
 
-* Data and Code: Open data yay!
+* Data and Code: Open data yay! R rocks.
 * Lessons
 * Notes
 
