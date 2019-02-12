@@ -2,7 +2,7 @@
 
 Hands on materials for the Arctic Data Training workshop
 
-* Data
+* Datalkdjlask
 * Lessons
 * Notes
 
