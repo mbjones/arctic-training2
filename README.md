@@ -2,7 +2,7 @@
 
 Hands on materials for the Arctic Data Training workshop
 
-* Data
+* Data and Code: Matt chnaged this.
 * Lessons
 * Notes
 
