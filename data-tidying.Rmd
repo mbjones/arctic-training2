@@ -98,15 +98,6 @@ year_mean <- catch_clean %>%
 year_mean
 ```
 
-```{r}
-year_mean <- catch_clean %>% 
-    group_by(Year) %>% 
-    mutate(catch_mean = mean(catch)) %>% 
-    arrange(-Year) %>% 
-    filter(Year <= 1990 & Year >= 1960) # |
-
-year_mean
-```
 
 
 # Join the Region Definitions
