@@ -1,0 +1,66 @@
+---
+title: "functions-tutorial"
+author: "Matt Jones"
+date: "2/13/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Work with some data in degrees F
+
+- Convert to C
+
+```{r}
+airtemps <- c(212, 100, 32, 64, 0, -20)
+
+airtemp1 <- (airtemps[1] - 32) * 5/9
+airtemp2 <- (airtemps[2] - 32) * 5/9
+airtemp3 <- (airtemps[3] - 32) * 5/9
+airtemp4 <- (airtemps[4] - 32) * 5/9
+airtemp5 <- (airtemps[5] - 32) * 5/9
+airtemp_F <- (airtemps - 32) * 5/9
+```
+
+
+# Write a function to do that
+
+```{r}
+fahr_to_celsius <- function(fahr) {
+    celsius <- (fahr - 32) * 5/9
+    return(celsius)
+}
+
+celsius_temps <- fahr_to_celsius(airtemps)
+celsius_temps
+```
+
+
+# Write a function to go C to F
+
+```{r}
+celsius_to_fahr <- function(celsius) {
+    fahr <- (9/5)*celsius + 32
+    return(fahr)
+}
+
+fahrtemps <- celsius_to_fahr(celsius_temps)
+fahrtemps == airtemps
+```
+
+
+# Show how to document Functions
+
+```{r}
+#' Converts numeric temperature data from degrees Fahrenhiet to degrees Celsius
+#'
+#' @param fahr the value in Fahrenheit to be converted
+#' @return the converted value in Celsius
+fahr_to_celsius <- function(fahr) {
+    celsius <- (fahr - 32) * 5/9
+    return(celsius)
+}
+```
+
