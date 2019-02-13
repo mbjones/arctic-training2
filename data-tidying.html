@@ -248,35 +248,82 @@ year_mean</code></pre>
 ##  9  1982   1319282.
 ## 10  1981   1340765.
 ## # ... with 21 more rows</code></pre>
-<pre class="r"><code>year_mean &lt;- catch_clean %&gt;% 
-    group_by(Year) %&gt;% 
-    mutate(catch_mean = mean(catch)) %&gt;% 
-    arrange(-Year) %&gt;% 
-    filter(Year &lt;= 1990 &amp; Year &gt;= 1960) # |
-
-year_mean</code></pre>
-<pre><code>## # A tibble: 2,630 x 5
-## # Groups:   Year [31]
-##    Region  Year species  catch catch_mean
-##    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;
-##  1 SSE     1990 Chinook 125000   1824212.
-##  2 NSE     1990 Chinook 209000   1824212.
-##  3 YAK     1990 Chinook  11000   1824212.
-##  4 BER     1990 Chinook      0   1824212.
-##  5 COP     1990 Chinook  22000   1824212.
-##  6 PWS     1990 Chinook      0   1824212.
-##  7 CKI     1990 Chinook  18000   1824212.
-##  8 BRB     1990 Chinook  34000   1824212.
-##  9 KSK     1990 Chinook  85000   1824212.
-## 10 YUK     1990 Chinook  96000   1824212.
-## # ... with 2,620 more rows</code></pre>
 </div>
 </div>
 <div id="join-the-region-definitions" class="section level1">
 <h1>Join the Region Definitions</h1>
+<p>Read in the regions dataframe</p>
+<pre class="r"><code>region_defs &lt;- read.csv(url(&quot;https://knb.ecoinformatics.org/knb/d1/mn/v2/object/df35b.303.1&quot;,
+                            method = &quot;libcurl&quot;),
+                        stringsAsFactors = FALSE) %&gt;% 
+    select(code, mgmtArea) %&gt;% 
+    rename(Region = code)
+
+head(region_defs)</code></pre>
+<pre><code>##    Region                                  mgmtArea
+## 1     GSE              Unallocated Southeast Alaska
+## 2     NSE                 Northern Southeast Alaska
+## 3     SSE                 Southern Southeast Alaska
+## 4     YAK                                   Yakutat
+## 5 PWSmgmt      Prince William Sound Management Area
+## 6     BER Bering River Subarea Copper River Subarea</code></pre>
+<pre class="r"><code>catch_joined &lt;- left_join(catch_clean, region_defs, by = c(&quot;Region&quot;))
+
+head(catch_joined)</code></pre>
+<pre><code>##   Region Year species catch                  mgmtArea
+## 1    SSE 1886 Chinook     0 Southern Southeast Alaska
+## 2    SSE 1887 Chinook     0 Southern Southeast Alaska
+## 3    SSE 1888 Chinook     0 Southern Southeast Alaska
+## 4    SSE 1889 Chinook     0 Southern Southeast Alaska
+## 5    SSE 1890 Chinook     0 Southern Southeast Alaska
+## 6    SSE 1891 Chinook     0 Southern Southeast Alaska</code></pre>
 </div>
 <div id="misc.-functions" class="section level1">
 <h1>Misc. Functions</h1>
+<p>Separate and unite</p>
+<pre class="r"><code>dates_df &lt;- data.frame(date = c(&quot;5/24/1930&quot;,
+                                &quot;5/25/1930&quot;,
+                                &quot;5/26/1930&quot;,
+                                &quot;5/27/1930&quot;,
+                                &quot;5/28/1930&quot;),
+                       stringsAsFactors = FALSE)</code></pre>
+<pre class="r"><code>dates_split &lt;- dates_df %&gt;% 
+    separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;, remove = F)
+
+head(dates_split)</code></pre>
+<pre><code>##        date month day year
+## 1 5/24/1930     5  24 1930
+## 2 5/25/1930     5  25 1930
+## 3 5/26/1930     5  26 1930
+## 4 5/27/1930     5  27 1930
+## 5 5/28/1930     5  28 1930</code></pre>
+<pre class="r"><code>dates_unite &lt;- dates_split %&gt;% 
+    unite(col = date_iso, year, month, day, sep = &quot;-&quot;)
+
+head(dates_unite)</code></pre>
+<pre><code>##        date  date_iso
+## 1 5/24/1930 1930-5-24
+## 2 5/25/1930 1930-5-25
+## 3 5/26/1930 1930-5-26
+## 4 5/27/1930 1930-5-27
+## 5 5/28/1930 1930-5-28</code></pre>
+<pre class="r"><code>isls &lt;- data.frame(site = c(&quot;ALA-02&quot;,
+                                &quot;ALA-03-12&quot;,
+                                &quot;GUG-12&quot;,
+                                &quot;GUA-21&quot;,
+                                &quot;GUAg-12&quot;),
+                       stringsAsFactors = FALSE)
+
+isls &lt;- isls %&gt;% 
+    separate(site, into = c(&quot;island&quot;, &quot;site&quot;))</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 1 rows [2].</code></pre>
+<pre class="r"><code>isls</code></pre>
+<pre><code>##   island site
+## 1    ALA   02
+## 2    ALA   03
+## 3    GUG   12
+## 4    GUA   21
+## 5   GUAg   12</code></pre>
 </div>
 
 
