@@ -1,0 +1,27 @@
+---
+title: "Data Reformatting"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning = FALSE, message = FALSE}
+library(dplyr)
+library(tidyr)
+
+# to call stats filter - stats::filter()
+```
+
+
+# Reformat Catch Data
+
+* remove "all" column
+* create species column
+    - move from wide to long
+* general QA
+
+# Join the Region Definitions
+
+# Misc. Functions
